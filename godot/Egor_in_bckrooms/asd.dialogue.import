@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_4"
+type="Resource"
+uid="uid://c86ox881k0q0k"
+path="res://.godot/imported/asd.dialogue-7f60b4bf922ba5ddbb68d9756a1cac21.tres"
+
+[deps]
+
+source_file="res://asd.dialogue"
+dest_files=["res://.godot/imported/asd.dialogue-7f60b4bf922ba5ddbb68d9756a1cac21.tres"]
+
+[params]
+

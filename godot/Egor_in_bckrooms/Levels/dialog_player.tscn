@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdtkyg84mwsps"]
+
+[ext_resource type="Script" path="res://Levels/dialog_player.gd" id="1_7nyoj"]
+[ext_resource type="Texture2D" uid="uid://cfspogiafso5m" path="res://Objects/Textbox_window.png" id="1_hqqf8"]
+
+[node name="DialogPlayer" type="CanvasLayer"]
+process_mode = 1
+script = ExtResource("1_7nyoj")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.967
+anchor_right = 0.5
+anchor_bottom = 0.967
+offset_left = -352.0
+offset_top = -256.24
+offset_right = 352.0
+offset_bottom = -0.240051
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_hqqf8")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SpeakerName" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Mike"
+fit_content = true
+
+[node name="TextLabel" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Lorem Ipsum"
+fit_content = true

@@ -1,0 +1,5 @@
+extends Node
+
+class_name PLAYER_STATES
+
+enum DIRECTION_STATES { WALK_UP, WALK_LEFT, WALK_DOWN, WALK_RIGHT, IDLE }

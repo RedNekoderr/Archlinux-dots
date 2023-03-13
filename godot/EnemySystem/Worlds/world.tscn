@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://vkf0gsdmnu5h"]
+
+[ext_resource type="Script" path="res://Worlds/world.gd" id="1_82yq6"]
+[ext_resource type="PackedScene" uid="uid://qth4k2siueub" path="res://Characters/player_cat.tscn" id="1_rf4sd"]
+[ext_resource type="PackedScene" uid="uid://bl1ymf1gl5n7s" path="res://Worlds/lantern.tscn" id="3_fjean"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nh6ta"]
+vertices = PackedVector2Array(150, 92, -15, 77, 1, 1)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, 1, -15, 77, 150, 92)])
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_82yq6")
+
+[node name="PlayerCat" parent="." instance=ExtResource("1_rf4sd")]
+position = Vector2(126, 66)
+
+[node name="ColorRect" parent="." instance=ExtResource("3_fjean")]
+offset_left = -10.0
+offset_top = 161.0
+offset_right = 13.0
+offset_bottom = 168.0
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(35, 43)
+navigation_polygon = SubResource("NavigationPolygon_nh6ta")
+
+[editable path="ColorRect"]
+[editable path="ColorRect/Scope"]
+[editable path="ColorRect/HurtBox"]

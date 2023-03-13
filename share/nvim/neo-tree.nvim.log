@@ -1,0 +1,2 @@
+[ERROR Sat 11 Mar 2023 05:15:04 PM MSK] ...re/nvim/lazy/neo-tree.nvim/lua/neo-tree/events/queue.lua:203: Error in event handler for event vim_win_enter[neo-tree-win-enter]: ...hare/nvim/lazy/neo-tree.nvim/lua/neo-tree/setup/init.lua:306: Vim(quit):E37: No write since last change
+[ERROR Sat 11 Mar 2023 05:15:08 PM MSK] ...re/nvim/lazy/neo-tree.nvim/lua/neo-tree/events/queue.lua:203: Error in event handler for event vim_win_enter[neo-tree-win-enter]: ...hare/nvim/lazy/neo-tree.nvim/lua/neo-tree/setup/init.lua:306: Vim(quit):E37: No write since last change

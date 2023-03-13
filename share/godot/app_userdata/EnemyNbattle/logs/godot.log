@@ -1,0 +1,21 @@
+Godot Engine v4.0.beta17.official.c40020513 - https://godotengine.org
+Vulkan API 1.3.230 - Using Vulkan Device #0: AMD - AMD Radeon Vega 8 Graphics (RADV RAVEN)
+ 
+USER ERROR: Attempt to open script 'res://player_cat.gd' resulted in error 'File not found'.
+   at: load_source_code (modules/gdscript/gdscript.cpp:1043)
+USER ERROR: Script does not inherit from Node: res://player_cat.gd.
+   at: start (main/main.cpp:2724)
+USER ERROR: Attempted to free invalid ID: 0
+   at: _free_internal (drivers/vulkan/rendering_device_vulkan.cpp:8382)
+USER ERROR: Attempted to free invalid ID: 0
+   at: _free_internal (drivers/vulkan/rendering_device_vulkan.cpp:8382)
+USER ERROR: Attempted to free invalid ID: 0
+   at: _free_internal (drivers/vulkan/rendering_device_vulkan.cpp:8382)
+USER ERROR: Attempted to free invalid ID: 0
+   at: _free_internal (drivers/vulkan/rendering_device_vulkan.cpp:8382)
+USER ERROR: Attempted to free invalid ID: 0
+   at: _free_internal (drivers/vulkan/rendering_device_vulkan.cpp:8382)
+USER ERROR: Condition "!shader" is true.
+   at: shader_free (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2453)
+USER ERROR: Condition "!material" is true.
+   at: material_free (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2686)

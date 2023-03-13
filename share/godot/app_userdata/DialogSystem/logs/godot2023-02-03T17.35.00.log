@@ -1,0 +1,5 @@
+Godot Engine v4.0.beta.arch_linux.e1648b332 - https://godotengine.org
+Vulkan API 1.3.230 - Using Vulkan Device #0: AMD - AMD Radeon Vega 8 Graphics (RADV RAVEN)
+ 
+USER ERROR: Can't add child 'DialogWindow' to 'GlobalBus', already has a parent 'GlobalBus'.
+   at: add_child (scene/main/node.cpp:1132)

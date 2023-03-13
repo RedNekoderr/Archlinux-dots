@@ -1,0 +1,5 @@
+Godot Engine v4.0.beta17.official.c40020513 - https://godotengine.org
+Vulkan API 1.3.230 - Using Vulkan Device #0: AMD - AMD Radeon Vega 8 Graphics (RADV RAVEN)
+ 
+USER ERROR: Node not found: "CollisionShape2D" (relative to "/root/PlayerCat").
+   at: get_node (scene/main/node.cpp:1364)

@@ -1,0 +1,1 @@
+{"secondary_sources":[],"schema_version":"1.1","links":{"share":{},"opt":{},"bin":{"autoflake":"venv\/bin\/autoflake"}},"metrics":{"completion_time":1678544256447,"start_time":1678544246067},"primary_source":{"type":"pip3","package":"autoflake"},"name":"autoflake"}

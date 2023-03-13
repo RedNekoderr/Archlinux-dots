@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+path=$HOME/Documents/Godot/Versions/
+version=$(ls $path/ | wofi --show dmenu)
+exec $path$version

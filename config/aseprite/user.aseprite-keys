@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<keyboard version="1">
+    <commands>
+        <key command="Zoom" shortcut="1" removed="true">
+            <param name="percentage" value="100" />
+        </key>
+        <key command="Zoom" shortcut="2" removed="true">
+            <param name="percentage" value="200" />
+        </key>
+        <key command="Zoom" shortcut="3" removed="true">
+            <param name="percentage" value="400" />
+        </key>
+    </commands>
+    <tools>
+        <key tool="rectangular_marquee" shortcut="M" removed="true" />
+        <key tool="rectangular_marquee" shortcut="D" />
+        <key tool="pencil" shortcut="B" removed="true" />
+        <key tool="pencil" shortcut="1" />
+        <key tool="eyedropper" shortcut="I" removed="true" />
+        <key tool="eyedropper" shortcut="3" />
+        <key tool="gradient" shortcut="Shift+G" removed="true" />
+        <key tool="gradient" shortcut="2" />
+        <key tool="rectangle" shortcut="U" removed="true" />
+        <key tool="rectangle" shortcut="Q" />
+    </tools>
+    <quicktools />
+    <actions />
+    <wheel />
+</keyboard>

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bof4qj8d4pif8"]
+
+[ext_resource type="PackedScene" uid="uid://ykk71gg4mts6" path="res://Characters/chr_egor.tscn" id="1_4w3vu"]
+
+[node name="TestWorld" type="Node2D"]
+
+[node name="chr_Egor" parent="." instance=ExtResource("1_4w3vu")]

@@ -1,0 +1,9 @@
+search sc
+search .lo
+search .loca
+search fo
+delete
+open_with 2
+
+copy
+[49;9u

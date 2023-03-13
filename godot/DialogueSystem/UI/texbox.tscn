@@ -1,0 +1,132 @@
+[gd_scene load_steps=10 format=3 uid="uid://dfuc083p5a566"]
+
+[ext_resource type="Script" path="res://UI/texbox.gd" id="1_onul8"]
+[ext_resource type="Texture2D" uid="uid://6wp5rrd3olel" path="res://assets/Dialog_window.png" id="2_ilsav"]
+[ext_resource type="FontFile" uid="uid://bjadsvdlaqj2l" path="res://assets/VHS.ttf" id="3_qa0qa"]
+[ext_resource type="Texture2D" uid="uid://cc5ebxwwjo5pb" path="res://assets/Dialog_buttons.png" id="4_l100k"]
+[ext_resource type="Texture2D" uid="uid://vtxs2jyp5hr" path="res://assets/dilg_win.png" id="5_2lr2w"]
+[ext_resource type="Texture2D" uid="uid://08w8glheevs0" path="res://assets/button_def.png" id="6_6ryes"]
+[ext_resource type="Texture2D" uid="uid://ptsxlyq4ysyp" path="res://assets/button_hov.png" id="7_so7ue"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a176k"]
+texture = ExtResource("6_6ryes")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rvwjl"]
+texture = ExtResource("7_so7ue")
+
+[node name="DialogWindow" type="CanvasLayer"]
+scale = Vector2(0.7, 0.7)
+transform = Transform2D(0.7, 0, 0, 0.7, 0, 0)
+script = ExtResource("1_onul8")
+
+[node name="Background" type="NinePatchRect" parent="."]
+anchors_preset = -1
+anchor_left = 0.717
+anchor_top = 1.377
+anchor_right = 0.717
+anchor_bottom = 1.377
+offset_left = -768.114
+offset_top = -320.344
+offset_right = 767.886
+offset_bottom = -0.343628
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_ilsav")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Indicator" type="Sprite2D" parent="Background/MarginContainer"]
+texture_filter = 2
+position = Vector2(1497, 36)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_l100k")
+hframes = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Speaker" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_qa0qa")
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+fit_content = true
+
+[node name="Label" type="RichTextLabel" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.133333, 0.121569, 0.164706, 1)
+theme_override_fonts/normal_font = ExtResource("3_qa0qa")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+fit_content = true
+
+[node name="GridContainer" type="GridContainer" parent="Background/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionsContainer" type="NinePatchRect" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 1.355
+anchor_top = 0.566
+anchor_right = 1.355
+anchor_bottom = 0.566
+offset_left = -268.971
+offset_top = 0.30014
+offset_right = 0.0288086
+offset_bottom = 384.3
+grow_horizontal = 0
+texture = ExtResource("5_2lr2w")
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="RichTextLabel" type="RichTextLabel" parent="OptionsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_qa0qa")
+theme_override_font_sizes/normal_font_size = 36
+text = "Choose:"
+fit_content = true
+
+[node name="Options" type="VBoxContainer" parent="OptionsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Button" type="Button" parent="."]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 80)
+layout_direction = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_bottom = 64.0
+grow_horizontal = 0
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxTexture_a176k")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rvwjl")
+text_overrun_behavior = 3

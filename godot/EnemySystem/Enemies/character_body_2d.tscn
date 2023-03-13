@@ -1,0 +1,229 @@
+[gd_scene load_steps=20 format=3 uid="uid://cbph2wd26yclg"]
+
+[ext_resource type="PackedScene" uid="uid://dmxb6cikf8rm2" path="res://Boxes/hit_box.tscn" id="2_g5730"]
+[ext_resource type="Texture2D" uid="uid://bj38srd3ccyqx" path="res://Enemies/Screenshot from 10-02-23 14:05:23.png" id="2_xybt4"]
+[ext_resource type="PackedScene" uid="uid://gr0cigguh5p" path="res://Boxes/scope.tscn" id="3_8jvfw"]
+[ext_resource type="PackedScene" uid="uid://df6jgi6ahiebv" path="res://Boxes/light_finder.tscn" id="4_boxo1"]
+
+[sub_resource type="GDScript" id="GDScript_yni0v"]
+script/source = "extends CharacterBody2D
+
+enum SMILER_STATES { SPAWN, IDLE, SCOUR, FOLLOW, FOLLOW_LIGHT, HIT, DISAPPEAR }
+
+@onready var nav_agent = $NavigationAgent2D
+@onready var animation_tree : AnimationTree = $AnimationTree
+@onready var state_machine : AnimationNodeStateMachinePlayback = animation_tree.get(\"parameters/playback\")
+@onready var sprite : Sprite2D = $SmilerSprite
+@onready var timer : Timer = $Timer
+
+var move_direction : Vector2 = Vector2.ZERO
+var current_state : SMILER_STATES = SMILER_STATES.SPAWN
+var move_speed : float = 30
+
+func _ready() -> void:
+	animation_tree.active = true
+	state_player()
+
+func _physics_process(_delta) -> void:
+	match current_state:
+		SMILER_STATES.SPAWN:
+			velocity = Vector2.ZERO
+		SMILER_STATES.SCOUR:
+			velocity = move_direction * move_speed
+		SMILER_STATES.FOLLOW:
+			var target = get_tree().get_nodes_in_group(\"PlayerCharacter\")[0]
+			velocity = (target.position - position).normalized() * move_speed
+		SMILER_STATES.FOLLOW_LIGHT:
+			var target = get_tree().get_nodes_in_group(\"Light\")[0]
+			velocity = (target.position - position).normalized() * move_speed
+		SMILER_STATES.DISAPPEAR:
+			velocity = Vector2.ZERO
+			
+	move_and_slide()
+
+func state_player() -> void:
+	match current_state:
+		SMILER_STATES.SPAWN:
+			spawn()
+		SMILER_STATES.IDLE:
+			choose_direction()
+			timer.start(choose_random_time(1, 2))
+			current_state = SMILER_STATES.SCOUR
+		SMILER_STATES.SCOUR:
+			timer.start(choose_random_time(1, 2))
+			current_state = SMILER_STATES.IDLE
+		SMILER_STATES.DISAPPEAR:
+			await get_tree().create_timer(1).timeout
+			self.queue_free()
+
+func spawn():
+	GlobalSignals.lamp_action('blink')
+	await get_tree().create_timer(choose_random_time(1, 2)).timeout
+	GlobalSignals.lamp_action('off')
+	self.show()
+	state_machine.travel(\"Spawn\")
+	await get_tree().create_timer(1).timeout
+	current_state = SMILER_STATES.IDLE
+	state_player()
+
+func choose_direction() -> void:
+	move_direction = Vector2(randi_range(-1,1), randi_range(-1,1))
+
+func choose_random_time(from : int, to : int) -> float:
+	return randf_range(from, to)
+
+func _on_timer_timeout() -> void:
+	state_player()
+
+func _on_scope_area_entered(_area):
+	current_state = SMILER_STATES.FOLLOW
+
+func _on_scope_area_exited(_area):
+	current_state = SMILER_STATES.IDLE
+	state_player()
+
+func _on_light_finder_area_entered(_area):
+	if current_state != SMILER_STATES.FOLLOW:
+		current_state = SMILER_STATES.FOLLOW_LIGHT
+
+func _on_hit_box_area_entered(_area):
+	current_state = SMILER_STATES.DISAPPEAR
+	state_player()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k62ut"]
+size = Vector2(27, 20)
+
+[sub_resource type="Animation" id="Animation_3kke0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SmilerSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.093, 0.09)]
+}
+
+[sub_resource type="Animation" id="Animation_u0upu"]
+resource_name = "scour"
+
+[sub_resource type="Animation" id="Animation_i5arr"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SmilerSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.093, 0.09), Vector2(0.123862, 0.120092), Vector2(0.093, 0.09)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wm8cc"]
+_data = {
+"RESET": SubResource("Animation_3kke0"),
+"scour": SubResource("Animation_u0upu"),
+"spawn": SubResource("Animation_i5arr")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p8t30"]
+animation = &"scour"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wu0yw"]
+animation = &"spawn"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xh5jo"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dmoqt"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6ksmb"]
+states/Scour/node = SubResource("AnimationNodeAnimation_p8t30")
+states/Scour/position = Vector2(456, 100)
+states/Spawn/node = SubResource("AnimationNodeAnimation_wu0yw")
+states/Spawn/position = Vector2(332, 100)
+states/Start/position = Vector2(167, 100)
+transitions = ["Start", "Spawn", SubResource("AnimationNodeStateMachineTransition_xh5jo"), "Spawn", "Scour", SubResource("AnimationNodeStateMachineTransition_dmoqt")]
+graph_offset = Vector2(-58, 32)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_1wqg5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1rvt"]
+radius = 39.0512
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26m38"]
+radius = 39.0
+height = 172.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lw74y"]
+radius = 8.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+visible = false
+position = Vector2(89, 58)
+collision_layer = 8
+script = SubResource("GDScript_yni0v")
+
+[node name="SmilerSprite" type="Sprite2D" parent="."]
+position = Vector2(-0.499998, 1.90735e-06)
+scale = Vector2(0.093, 0.09)
+texture = ExtResource("2_xybt4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 8
+visibility_layer = 8
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_k62ut")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wm8cc")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_6ksmb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_1wqg5")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Scope" parent="." instance=ExtResource("3_8jvfw")]
+collision_layer = 64
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Scope" index="0"]
+shape = SubResource("CircleShape2D_e1rvt")
+
+[node name="LightFinder" parent="." instance=ExtResource("4_boxo1")]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" parent="LightFinder" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_26m38")
+
+[node name="HitBox" parent="." instance=ExtResource("2_g5730")]
+collision_layer = 8
+collision_mask = 1024
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_lw74y")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Scope" to="." method="_on_scope_area_entered"]
+[connection signal="area_exited" from="Scope" to="." method="_on_scope_area_exited"]
+[connection signal="area_entered" from="LightFinder" to="." method="_on_light_finder_area_entered"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+
+[editable path="Scope"]
+[editable path="LightFinder"]
+[editable path="HitBox"]

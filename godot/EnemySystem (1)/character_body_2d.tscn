@@ -1,0 +1,111 @@
+[gd_scene load_steps=16 format=3 uid="uid://dsmv0ldi124ue"]
+
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_qi61x"]
+[ext_resource type="Texture2D" uid="uid://bj38srd3ccyqx" path="res://Screenshot from 10-02-23 14:05:23.png" id="2_xybt4"]
+[ext_resource type="Shader" path="res://glitch.gdshader" id="3_ccrt6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k62ut"]
+size = Vector2(27, 20)
+
+[sub_resource type="Animation" id="Animation_3kke0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SmilerSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.093, 0.09)]
+}
+
+[sub_resource type="Animation" id="Animation_u0upu"]
+resource_name = "scour"
+
+[sub_resource type="Animation" id="Animation_i5arr"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SmilerSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.093, 0.09), Vector2(0.123862, 0.120092), Vector2(0.093, 0.09)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wm8cc"]
+_data = {
+"RESET": SubResource("Animation_3kke0"),
+"scour": SubResource("Animation_u0upu"),
+"spawn": SubResource("Animation_i5arr")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p8t30"]
+animation = &"scour"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wu0yw"]
+animation = &"spawn"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xh5jo"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dmoqt"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6ksmb"]
+states/Scour/node = SubResource("AnimationNodeAnimation_p8t30")
+states/Scour/position = Vector2(456, 100)
+states/Spawn/node = SubResource("AnimationNodeAnimation_wu0yw")
+states/Spawn/position = Vector2(332, 100)
+states/Start/position = Vector2(167, 100)
+transitions = ["Start", "Spawn", SubResource("AnimationNodeStateMachineTransition_xh5jo"), "Spawn", "Scour", SubResource("AnimationNodeStateMachineTransition_dmoqt")]
+graph_offset = Vector2(-58, 32)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_1wqg5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hb5i3"]
+shader = ExtResource("3_ccrt6")
+shader_parameter/shake_power = 0.005
+shader_parameter/shake_rate = 1.0
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_qi61x")
+
+[node name="SmilerSprite" type="Sprite2D" parent="."]
+position = Vector2(2.86102e-06, 1.90735e-06)
+scale = Vector2(0.093, 0.09)
+texture = ExtResource("2_xybt4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_k62ut")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wm8cc")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_6ksmb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_1wqg5")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_hb5i3")
+offset_left = -35.0
+offset_top = -25.0
+offset_right = 35.0
+offset_bottom = 35.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

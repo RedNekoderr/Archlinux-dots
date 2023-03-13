@@ -1,0 +1,99 @@
+let SessionLoad = 1
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/Documents/GitHub/Egor-bot/Handlers
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+let s:shortmess_save = &shortmess
+if &shortmess =~ 'A'
+  set shortmess=aoOA
+else
+  set shortmess=aoO
+endif
+badd +107 client.py
+argglobal
+%argdel
+edit client.py
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=99
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+17,20fold
+30,31fold
+29,31fold
+26,32fold
+37,38fold
+40,42fold
+39,42fold
+44,49fold
+35,52fold
+60,63fold
+55,64fold
+70,71fold
+73,74fold
+72,76fold
+78,80fold
+77,82fold
+85,86fold
+84,86fold
+83,88fold
+91,92fold
+67,93fold
+100,101fold
+99,102fold
+104,106fold
+107,108fold
+109,110fold
+111,112fold
+103,112fold
+114,115fold
+113,115fold
+96,116fold
+120,123fold
+124,125fold
+119,125fold
+132,133fold
+131,133fold
+130,133fold
+128,134fold
+139,140fold
+137,141fold
+144,146fold
+149,150fold
+154,155fold
+153,155fold
+162,164fold
+166,167fold
+168,169fold
+158,171fold
+let &fdl = &fdl
+let s:l = 10 - ((9 * winheight(0) + 11) / 23)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 10
+normal! 037|
+tabnext 1
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20
+let &shortmess = s:shortmess_save
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if filereadable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &g:so = s:so_save | let &g:siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

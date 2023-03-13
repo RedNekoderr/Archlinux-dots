@@ -1,0 +1,19 @@
+Godot Engine v4.0.rc1.official.8843d9ad3 - https://godotengine.org
+Vulkan API 1.3.230 - Forward Mobile - Using Vulkan Device #0: AMD - AMD Radeon Vega 8 Graphics (RADV RAVEN)
+ 
+USER ERROR: Attempt to open script 'res://addons/dialogic/Resources/CharacterResourceLoader.gd' resulted in error 'File not found'.
+   at: load_source_code (modules/gdscript/gdscript.cpp:1043)
+USER ERROR: Script does not inherit a CustomResourceLoader: res://addons/dialogic/Resources/CharacterResourceLoader.gd.
+   at: add_custom_resource_format_loader (core/io/resource_loader.cpp:1021)
+USER ERROR: Attempt to open script 'res://addons/dialogic/Resources/TimelineResourceLoader.gd' resulted in error 'File not found'.
+   at: load_source_code (modules/gdscript/gdscript.cpp:1043)
+USER ERROR: Script does not inherit a CustomResourceLoader: res://addons/dialogic/Resources/TimelineResourceLoader.gd.
+   at: add_custom_resource_format_loader (core/io/resource_loader.cpp:1021)
+USER ERROR: Attempt to open script 'res://addons/dialogic/Resources/CharacterResourceSaver.gd' resulted in error 'File not found'.
+   at: load_source_code (modules/gdscript/gdscript.cpp:1043)
+USER ERROR: Script does not inherit a CustomResourceSaver: res://addons/dialogic/Resources/CharacterResourceSaver.gd.
+   at: add_custom_resource_format_saver (core/io/resource_saver.cpp:240)
+USER ERROR: Attempt to open script 'res://addons/dialogic/Resources/TimelineResourceSaver.gd' resulted in error 'File not found'.
+   at: load_source_code (modules/gdscript/gdscript.cpp:1043)
+USER ERROR: Script does not inherit a CustomResourceSaver: res://addons/dialogic/Resources/TimelineResourceSaver.gd.
+   at: add_custom_resource_format_saver (core/io/resource_saver.cpp:240)

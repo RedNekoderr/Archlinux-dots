@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://or1enh5ijqfr"]
+
+[ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://addons/dialogue_manager/example_balloon/example_balloon.tscn" id="1_k13ea"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ExampleBalloon" parent="." instance=ExtResource("1_k13ea")]

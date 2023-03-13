@@ -1,0 +1,11 @@
+Godot Engine v4.0.rc2.official.d2699dc7a - https://godotengine.org
+Vulkan API 1.3.230 - Forward Mobile - Using Vulkan Device #0: AMD - AMD Radeon Vega 8 Graphics (RADV RAVEN)
+ 
+USER ERROR: Condition "p_args.size() < 10" is true. Returning: ERR_INVALID_DATA
+   at: parse_message (scene/debugger/scene_debugger.cpp:174)
+USER ERROR: Condition "p_args.size() < 10" is true. Returning: ERR_INVALID_DATA
+   at: parse_message (scene/debugger/scene_debugger.cpp:174)
+USER ERROR: Condition "p_args.size() < 10" is true. Returning: ERR_INVALID_DATA
+   at: parse_message (scene/debugger/scene_debugger.cpp:174)
+USER ERROR: Condition "p_args.size() < 10" is true. Returning: ERR_INVALID_DATA
+   at: parse_message (scene/debugger/scene_debugger.cpp:174)
