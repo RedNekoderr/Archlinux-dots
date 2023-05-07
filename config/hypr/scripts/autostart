@@ -7,6 +7,10 @@ hyprpaper &
 
 dunst &
 
+$scripts/micbacklight &
+
+sleep 0.5 &
+
 $scripts/restart-waybar &
 
 ## make kde connect work  (source: https://www.reddit.com/r/kde/comments/l6t6qu/please_make_kdeconnectcli_work_in_headless_moded/)
@@ -14,4 +18,3 @@ $scripts/restart-waybar &
 ## Gnome authentication
 #/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-$scripts/micbacklight

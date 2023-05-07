@@ -22,6 +22,7 @@ case $1 in
   '-S' ) grim "${PICTPATH}${OUTPUT}" ;;
   ''| '-A' ) grim -g "$(slurp -d)" "${PICTPATH}${OUTPUT}" ;;
   '-W' ) grim -g "${FOCUSED}" "${PICTPATH}${OUTPUT}" ;;
+  '-G' ) grim -g "1310,120 490x555" "${PICTPATH}${OUTPUT}";;
 esac
 wl-copy -t image/"${FORMAT}" < "${PICTPATH}${OUTPUT}"
 notify-send "Screenshot" "File saved as <i>'$OUTPUT'</i> and copied to the clipboard." -i "${PICTPATH}${OUTPUT}"

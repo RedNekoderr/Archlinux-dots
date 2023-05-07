@@ -1,66 +1,72 @@
 {
-    "layer": "top",
-    "position": "top",
-    // "width"': 1280, // Waybar width
-    "modules-left": ["clock", "hyprland/window"],
-    "modules-center": ["wlr/workspaces"],
-    "modules-right": ["tray", "battery", "custom/sep", "pulseaudio", "custom/sep", "cpu", "custom/sep", "hyprland/language", "backlight", "network"],
-     "wlr/workspaces": {
-         "format": "{icon}",
-         "format-icons": {
-             "default": "",
-         },
-         "on-scroll-up": "hyprctl dispatch workspace e+1",
-         "on-scroll-down": "hyprctl dispatch workspace e-1",
-         "on-click": "activate",
-     },
+    "layer": "top", // Waybar at top layer
+    "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces", "custom/weather"],
+    "modules-center": ["custom/playerctl"],
+    "modules-right": ["tray", "network", "pulseaudio",  "backlight", "hyprland/language", "battery", "custom/lock", "clock", "custom/power-menu"],
+    "wlr/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "on-scroll-up": "hyprctl dispatch workspace e+1",
+      "on-scroll-down": "hyprctl dispatch workspace e-1",
+      "format-icons": {
+        "active": "󰮯",
+        "default": "",
+      }
+    },
+    "hyprland/window": {
+        "format": "{}"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "format-alt": "{:%b %d %Y}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    },
     "hyprland/language": {
         "format": "{}",
         "format-en": "🇺🇸",
         "format-ru": "🇷🇺",
     },
-   //  "bluetooth": {
-   //   "on-click": "blueman-manager"      
-   // },
-   "hyprland/window" : {
-        "max-length": 64,
-   },
-     "custom/playerctl": {
-    "format": "{icon}  <span>{}</span>",
-    "return-type": "json",
-    "max-length": 35,
-    "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} ~ {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-    "on-click-middle": "playerctl play-pause",
-    "on-click": "playerctl previous",
-    "on-click-right": "playerctl next",
-    "format-icons": {
-      "Playing": "<span foreground='#94e2d5'></span>",
-      "Paused": "<span foreground='#f38ba8'></span>"
-    }
-  },
-    "tray": {
-        "icon-size": 21,
-        "spacing": 10
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10
-    },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
     "cpu": {
-        "format": " {usage}%",
-        "tooltip": false
+      "interval": 10,
+      "format": " {usage}%",
+      "max-length": 10,
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "format-alt":" {used:0.1f}GB",
+        "max-length": 10,
     },
     "backlight": {
-        "on-scroll-up": "light -A 12",
-        "on-scroll-down": "light -U 12",
+        "on-scroll-up": "light -T 1.4",
+        "on-scroll-down": "light -T 0.72",
+        "device": "eDP-1",
         "format": "{icon}",
-        "format-icons": [" ", " ", " ", " "]
+        "format-icons": ["󱩎 ", "󱩏 ", "󱩐 ", "󱩑 ", "󱩒 ", "󱩓 ", "󱩔 ", "󱩕 ", "󱩖 ", "󰛨 "],
+    },
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": " ",
+        "format-disconnected": "睊",
+        "tooltip-format": "{essid}",
+        "on-click": "~/.config/waybar/scripts/network/rofi-network-manager.sh",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "婢",
+        "format-bluetooth": "{icon}",
+        "format-icons": {
+            "default": ["", "", "墳"]
+        },
+        "on-click": "pavucontrol &"
     },
     "battery": {
+        "interval": 60,
         "states": {
             // "good": 80,
             "warning": 30,
@@ -75,26 +81,38 @@
     "battery#bat2": {
         "bat": "BAT2"
     },
-    "custom/sep": {
-    	"format": "",
+    "custom/weather": {
+      "exec": "sleep 2 && python3 ~/.config/waybar/scripts/weather.py",
+      "restart-interval": 350,
+      "return-type": "json",
+    },   
+   "custom/lock": {
+       "tooltip" : false,
+       "on-click": "sleep 0.5 && swaylock",
+       "format" : "",
     },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": " ",
-        "format-ethernet": " {ipaddr}/{cidr}",
-        "format-disconnected": "睊 ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-	"tooltip": false,
+    "custom/power-menu": {
+        "format": "⏻",
+        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh &",
+        "tooltip": false,
+    }, 
+    "custom/launcher": {
+        "format": "",
+        "on-click": "rofi -show drun &",
+        "tooltip": false,
     },
-    "pulseaudio": {
-        "scroll-step": 5, // %, can be a float
-        "format": "{icon} {volume}",
-        "format-bluetooth": "{icon} {volume}",
-        "format-bluetooth-muted": " ",
-        "format-muted": " ",
+
+    "custom/playerctl": {
+        "format": "{icon}  <span>{}</span>",
+        "return-type": "json",
+        "max-length": 35,
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} ~ {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click-middle": "playerctl play-pause",
+        "on-click": "playerctl previous",
+        "on-click-right": "playerctl next",
         "format-icons": {
-            "default": ["", "", " "]
-        },
-        "on-click": "pavucontrol"
-    },
-},
+        "Playing": "<span foreground='#8fbcbb'></span>",
+        "Paused": "<span foreground='#e78284'></span>"
+    }
+  },
+}
